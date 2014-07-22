@@ -1,0 +1,25 @@
+<h3>Format mvn conflict string into better format</h3>
+
+<p>
+a browse tool for formatting dependency conflict message from maven build 
+<p>
+<textarea id="input" style="width:400px;height:100px;"></textarea>
+<br>
+<button onclick="format();">format</button>
+
+<pre id="output">
+</pre>
+
+
+<script>
+
+function format() {
+  var input = document.getElementById('input').value;
+  input = input.replace(/among /, 'among\n');
+  input = input.replace(/, /g, ', \n\n');
+  input = input.replace(/->/g, '->\n');
+
+  document.getElementById('output').innerText = input;
+}
+
+</script>
