@@ -3,7 +3,7 @@
 <p>
 a browse tool for formatting dependency conflict message from maven build 
 <p>
-<textarea id="input" style="width:400px;height:100px;"></textarea>
+<textarea id="input" style="width:600px;height:150px;"></textarea>
 <br>
 <button onclick="format();">format</button>
 
@@ -15,7 +15,7 @@ a browse tool for formatting dependency conflict message from maven build
 
 function format() {
   var input = document.getElementById('input').value;
-  input = input.replace(/among /, 'among\n');
+  input = input.replace(/among /, 'among\n\n');
   input = input.replace(/, /g, ', \n\n');
   input = input.replace(/->/g, '->\n');
 
