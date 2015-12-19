@@ -1,0 +1,30 @@
+<script src="http://code.jquery.com/jquery-2.0.3.min.js" ></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"></link>
+
+<h1>emoticon.js</h1>
+
+<script src="./emoticon.js"></script>
+<script src="./icons.js"></script>
+
+<img src="https://assets-cdn.github.com/images/modules/dashboard/bootcamp/octocat_setup.png">
+
+<div id="gridTarget">
+Here
+</div>
+
+<span id="textTarget">This is a tset of 可怜 person</span>
+
+<script src="./emoticon.js">
+</script>
+
+<script>
+var emoticons = new Emoticons(icons);
+$('#gridTarget').html(emoticons.renderHtmlGrid());
+var text = $('#textTarget').text();
+var t = emoticons.render(text);
+$('#textTarget').html(t);
+
+</script>
+
