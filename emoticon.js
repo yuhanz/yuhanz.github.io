@@ -23,6 +23,7 @@ function Emoticons(iconArray) {
 	this._init(iconArray);
 
 	this.render = function(text) {
+		text = escapeHtml(text);
 		for(var i=0;i<this.names.length;i++) {
 
 			var name = this.names[i];
@@ -38,6 +39,10 @@ function Emoticons(iconArray) {
 
 		}
 		return text;
+	}
+
+	function escapeHtml(text) {
+		return $("<div>").text(text).html()
 	}
 
 	this.getImageUrl = function(name) {
@@ -57,6 +62,14 @@ function Emoticons(iconArray) {
 		return html;
 	}
 
+    this.renderToDivs = function(queryString) {
+        $(queryString).each(function(index, element) {
+            var text = $(this).text();
+            var t = _emoticons.render(text);
+            $(this).html(t);
+        });
+    }
+
 	this.emoticonClick = function(name, url) {
 		// override this function
 	}
@@ -69,15 +82,14 @@ function Emoticons(iconArray) {
 
 	var _emoticons = this;
 
-	$('img.emoticon').click(function() {
-		var img = $(this)
-		_emoticons.emoticonClick(img.attr("title"), img.attr("src"));
-	});
-	$('img.emoticon').mouseover(function() {
-		_emoticons.emoticonMouseover();
-	});
-	$('img.emoticon').mouseout(function() {
-		_emoticons.emoticonMouseout();
+	$(document).ready(function() {
+
+		$('img.emoticon').mouseover(function() {
+			_emoticons.emoticonMouseover();
+		});
+		$('img.emoticon').mouseout(function() {
+			_emoticons.emoticonMouseout();
+		});
 	});
 
 }
