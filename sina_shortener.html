@@ -1,50 +1,19 @@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
-
 <script>
-function shorten(urls) {
-
+function shorten() {
+    var url = $("#input").val()
 	var service = "http://api.t.sina.com.cn/short_url/shorten.json?source=1727689474";
-	for(var i=0;i<urls.length;i++)
-		service += "&url_long=" + encodeURI(urls[i]);
-	$.ajax({
-		"url": service,
-		dataType: 'jsonp',
-		success: function(data) {
-			//alert(JSON.stringify(data) );
-			for(var j=0;j<data.length;j++) {
-				var d = data[j];
-				$("#output").append("<br> " + d.url_short + "    " + d.url_long) + "\n";
-			}
-		}
-	});
+	service += "&url_long=" + encodeURI(url);
+    window.location = service; 
 }	
-
-shorten(["http://www.google.com"]);
-
-function shorten_all() {
-	try {
-		$("#output").html("");
-		var text = $("#textarea").val();
-		text = text.trim();
-		var urls = text.split("\n");
-		var set = [];
-		for(var i=0;i<urls.length;i++)
-			if(urls[i] != "")
-				set.push( urls[i] ) ;
-		shorten(urls);
-	} catch(ex) {
-		alert(ex);
-	}
-}
 </script>
 
 
 <h2>Sina URL shortener</h2>
 
-<textarea style="width:400px;height:400px" id="textarea">
-</textarea>
+<input style="width:400px;" id="input">
+</input>
 <p>
-<button onclick="shorten_all();">shorten
+<button onclick="shorten();">shorten
 </button>
 
 <p>
