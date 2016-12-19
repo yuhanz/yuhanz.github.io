@@ -50,6 +50,11 @@ function format() {
   output = "aws ec2 describe-instances --region us-west-2 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep RunList | sort | uniq"
   output += "\n"
   output += "aws ec2 describe-instances --region us-east-1 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep RunList | sort | uniq"
+
+  output = "aws ec2 describe-instances --region us-west-2 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep logical-id | sort | uniq"
+  output += "\n"
+  output += "aws ec2 describe-instances --region us-east-1 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep logical-id | sort | uniq"
+
   output += "\n"
   output += 'curl "http://' + ip + ':8080/docker/" | grep -oh "repo_tags\\\":\\[[^,]*\\],"'
   output += "\n"
