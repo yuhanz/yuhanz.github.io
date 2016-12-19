@@ -48,9 +48,11 @@ function format() {
   var ip = document.getElementById('input').value;
 
   output = "aws ec2 describe-instances --region us-west-2 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep --color=never RunList | sort | uniq" 
+  output += "\n"
   output += "aws ec2 describe-instances --region us-east-1 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep --color=never RunList | sort | uniq"
-
+  output += "\n"
   output += 'curl "http://' + ip + ':8080/docker/" | grep -oh "repo_tags\":\[[^,]*\],"'
+  output += "\n"
 
   document.getElementById('output').innerText = output;
 }
