@@ -1,0 +1,61 @@
+<html>
+<head>
+    <meta name="keywords" content="aws,docker" />
+    <meta name="description" content="Generate cli commands for looking up web-app name by Private Ip."/>
+                                                                                
+    <title>Generate cli commands for looking up web-app name by Private Ip.</title>
+</head>
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53265003-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- yuhanz.github.io - Maven conflict leaderboard -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2246393274964409"
+     data-ad-slot="9855716535"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<h3>Generate cli commands for looking up web-app name by Private Ip.</h3>
+
+<p>
+Given a private IP, generate cli commands that looks up the webapp names.
+<p>
+<textarea id="input" style="width:600px;height:150px;" onkeyup="format();"></textarea>
+<br>
+<button onclick="format();">format</button>
+
+<pre id="output">
+</pre>
+
+
+<script>
+
+function format() {
+  var ip = document.getElementById('input').value;
+
+  output = "aws ec2 describe-instances --region us-west-2 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + " "  + .Value'  | grep --color=never RunList | sort | uniq" 
+  output += "aws ec2 describe-instances --region us-east-1 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + " "  + .Value'  | grep --color=never RunList | sort | uniq"
+
+  output += 'curl "http://' + ip + ':8080/docker/" | grep -oh "repo_tags\":\[[^,]*\],"'
+
+  document.getElementById('output').innerText = output;
+}
+
+</script>
+
+</body>
+</html>
