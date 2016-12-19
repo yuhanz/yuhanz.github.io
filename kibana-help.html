@@ -1,9 +1,9 @@
 <html>
 <head>
-    <meta name="keywords" content="aws,docker" />
-    <meta name="description" content="Generate cli commands for looking up web-app name by Private Ip."/>
+    <meta name="keywords" content="kibana" />
+    <meta name="description" content="A tool to help generating queries to search nginx access log / Tomcat log for kibana"/>
                                                                                 
-    <title>Generate cli commands for looking up web-app name by Private Ip.</title>
+    <title>Generating Queries to Search Nginx access Log / Tomcat Log for Kibana<title>
 </head>
 <body>
 <script>
@@ -29,14 +29,14 @@
 </script>
 </div>
 
-<h3>Generate cli commands for looking up web-app name by Private Ip.</h3>
+<h3>Generating Queries to Search Nginx access Log / Tomcat Log for Kibana</h3>
 
 <p>
-Given a private IP, generate cli commands that looks up the webapp names.
+Aggregate client ip's from Nginx log
 <p>
 <textarea id="input" style="width:600px;height:150px;" onkeyup="format();"></textarea>
 <br>
-<button onclick="format();">Get Commands</button>
+<button onclick="format();">Get Query</button>
 
 <pre id="output">
 </pre>
@@ -45,13 +45,10 @@ Given a private IP, generate cli commands that looks up the webapp names.
 <script>
 
 function format() {
-  var ip = document.getElementById('input').value;
+  var query = document.getElementById('input').value;
+  query = encodeURI(query)
 
-  output = "aws ec2 describe-instances --region us-west-2 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep --color=never RunList | sort | uniq" 
-  output += "\n"
-  output += "aws ec2 describe-instances --region us-east-1 --filters 'Name=private-ip-address,Values=" + ip + "' | jq '.Reservations[].Instances[].Tags[] | .Key + \" \"  + .Value'  | grep --color=never RunList | sort | uniq"
-  output += "\n"
-  output += 'curl "http://' + ip + ':8080/docker/" | grep -oh "repo_tags\\\":\\[[^,]*\\],"'
+  output = "http://edmunds-kibana.prod-admin11.vip.aws1/app/kibana?#/visualize/create?type=table&indexPattern=nginx-*&_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now-15m,mode:quick,to:now))&_a=(filters:!(),linked:!f,query:(query_string:(analyze_wildcard:!t,query:'"+ query +"')),uiState:(),vis:(aggs:!((id:'1',params:(),schema:metric,type:count),(id:'2',params:(field:client_ip,order:desc,orderBy:'1',size:20),schema:bucket,type:terms)),listeners:(),params:(perPage:10,showMeticsAtAllLevels:!f,showPartialRows:!f),type:table))" 
   output += "\n"
 
   document.getElementById('output').innerText = output;
