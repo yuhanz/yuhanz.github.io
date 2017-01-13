@@ -55,7 +55,7 @@ function format() {
   classes = lines.map(function(f) {return f.match(/class (\S+)/)})
                 .filter(function(f) {return f})
   if(classes[0]) {
-    className = classes[0]
+    className = classes[0][1]
   }
 
   methods = fields.map(function(f) {return "public Builder "+f[2]+"("+f[1]+ " " + f[2]+") {"
@@ -67,10 +67,16 @@ function format() {
     return "v." + f[2] + " = prototype." + f[2] + ";"
   })
 
-  output = "public static class Builder {"
+
+
+  output = 
+        + "\npublic static Builder buildler() {"
+         + "\nreturn new Builder();"
+        + "\n}"
+        + "\npublic static class Builder {"
         + "\npublic " + className +" prototype = new " + className + "();"
         + "\npublic " + className +" build() {"
-        + "\n    " + className + "v = new " + className + "();"
+        + "\n    " + className + " v = new " + className + "();"
         + build.join("\n")
         + "\nreturn v;"
         + "\n}"
