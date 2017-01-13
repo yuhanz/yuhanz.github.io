@@ -47,12 +47,12 @@ Given a class and a list of fields, and generate a builder class for the given c
 
 function format() {
   var input = document.getElementById('input').value;
-  fields = input.split("\n")
+  lines = input.split("\n")
   className = "MyClass";
-  fields = fields.map(function(f) {return f.match(/(\S+) (\S+);/)})
+  fields = lines.map(function(f) {return f.match(/(\S+) (\S+);/)})
                 .filter(function(f) {return f})
 
-  classes = fields.map(function(f) {return f.match(/class (\S+)/)})
+  classes = lines.map(function(f) {return f.match(/class (\S+)/)})
                 .filter(function(f) {return f})
   if(classes[0]) {
     className = classes[0]
