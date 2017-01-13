@@ -29,7 +29,7 @@
 </script>
 </div>
 
-<h3>Format Maven Conflict String into Something More Readable</h3>
+<h3>Generate a Java builder class given a list of fields</h3>
 
 <p>
 Given a class and a list of fields, and generate a builder class for the given class.
@@ -49,7 +49,7 @@ function format() {
   var input = document.getElementById('input').value;
   fields = input.split("\n")
   className = "MyClass";
-  fields = fields.map(function(f) {return f.match(/(\S+) (\S+);/} )
+  fields = fields.map(function(f) {return f.match(/(\S+) (\S+);/)})
 
   methods = fields.map(function(f) {return "public Builder "+f[2]+"("+f[1]+ " " + f[2]+") {"
         + "\nprototype." + f[2] + " = " + f[2] + ";"
