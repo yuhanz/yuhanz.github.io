@@ -54,7 +54,7 @@ function format() {
   methods = fields.map(function(f) {return "public Builder "+f[2]+"("+f[1]+ " " + f[2]+") {"
         + "\nprototype." + f[2] + " = " + f[2] + ";"
         + "\nreturn this;"
-        + "\n}")
+        + "\n}"})
 
   build = fields.map(function(f) {
     return "v." + f[2] + " = prototype." + f[2] + ";"
