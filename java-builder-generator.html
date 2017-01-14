@@ -76,7 +76,7 @@ function format() {
         + "\npublic " + className +" prototype = new " + className + "();"
         + "\npublic " + className +" build() {"
         + "\n    " + className + " v = new " + className + "();"
-        + build.join("\n")
+        + "\n" + build.join("\n")
         + "\nreturn v;"
         + "\n}"
         + "\n"
