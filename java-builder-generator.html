@@ -68,12 +68,22 @@ function format() {
   })
 
 
+  copy = fields.map(function(f) {
+    return "prototype." + f[2] + " = v." + f[2] + ";"
+  })
 
-  output = "\npublic static Builder builder() {"
+  output =
+        "\npublic Builder copy() {return new Builder(this);}"
+        + "\npublic static Builder builder() {"
         + "\nreturn new Builder();"
         + "\n}"
         + "\npublic static class Builder {"
         + "\npublic " + className +" prototype = new " + className + "();"
+        + "\npublic Builder() {}"
+        + "\npublic Builder(" + className + " v) {"
+        + "\n"
+        + copy.join("\n")
+        + "\n}"
         + "\npublic " + className +" build() {"
         + "\n    " + className + " v = new " + className + "();"
         + "\n" + build.join("\n")
