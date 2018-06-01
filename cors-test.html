@@ -10,6 +10,7 @@
 <script>
     $.ajax({url: "http://626friend.com/1.php"})
     .done(function(data) {
+        console.log(data)
         $('#target').text(data)
     })
 </script>
