@@ -32,7 +32,7 @@
 <h3>Compare Two REST API endpoints</h3>
 
 <p>
-In some cases, we'd like to find out if two API's are identical. Given two API endpoints and a list of urls, this tool generates a shell script to compare if two hosts reach different result json.
+In some cases, we'd like to find out if two API's are identical. Given two API endpoints and a list of url paths, this tool generates a shell script to compare if two hosts reach different result json.
 
 <p>
 Take the generated shell script below and paste into your terminal to run the comparison. If two API's are identical, nothing is shown.
@@ -72,7 +72,7 @@ function generate() {
 
   var urls = input.split("\n")
 
-  var output = urls.map(url => `diff <(curl "${host1}${url}" | jq . -S) <(curl "${host2}${url}" | jq . -S)`)
+  var output = urls.map(url => `diff <(curl "${host1}${url}" | jq . -S) <(curl "${host2}${url}" | jq . -S) || echo "${url}"`)
                 .reduce((s,l) => `${s}\n${l}`, '');
 
   document.getElementById('output').innerText = output;
