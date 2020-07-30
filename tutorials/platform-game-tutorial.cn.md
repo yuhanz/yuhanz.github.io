@@ -148,15 +148,15 @@ function hitRectangle(r1, r2) {
   dx:0, dy:0},
   ... ,
   {state: '开火',
-   createNewObjects: [{
+   '创建动物': [{
       name: '火球',
       imgUrls: ['./火球.png'],
       x: 5, y: 5,
       dx: 4, dy: 0,
       gravityX: 0, gravityY: 0,
-      attackBox: {width: 10, height: 10, '减血': 1},
+      '攻击判定': {width: 10, height: 10, '减血': 1},
       onHit: {
-        createNewObjects: [{
+        '创建动物': [{
           name: '火花',
           imgUrls: ['./火花.png'],
           x: 0, y: 0,
