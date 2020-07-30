@@ -3,7 +3,7 @@
     <meta name="keywords" content="Rest comparator; API comparator; Endpoint comparator; compare a list of url's to two API endpoints;"/>
     <meta name="description" content="Given a list of urls, and two hosts, compare if the two hosts gave the same json response"/>
 
-    <title>API Comparison Util</title>
+    <title>Tool to Compare two REST API</title>
 </head>
 <body>
 <script>
@@ -32,17 +32,23 @@
 <h3>Compare Two REST API endpoints</h3>
 
 <p>
-Given two API endpoints and a list of urls, and generate a shell script to compare if two hosts reach different result json.
+In some cases, we'd like to find out if two API's are identical. Given two API endpoints and a list of urls, this tool generates a shell script to compare if two hosts reach different result json.
 
 <p>
 Take the generated shell script below and paste into your terminal to run the comparison. If two API's are identical, nothing is shown.
 <br>
-(The generated shell script will use <i>curl</i> and <i>jq</i>. Make sure they are installed.)
+(The generated shell script will use <i>curl</i> and <i>jq</i>)
 <p>
 When your result is too long, it may be clipped by the terminal.
 <br>
 To avoid ternimal copy buffer restriction, save the shell script into a file, and run.
-<br>Ex: <b>/tmp/1.sh</b> Then execute the file with <i>bash /tmp/1.sh</i>
+<br>Ex: <b>/tmp/1.sh</b> Then execute the file with
+<p>
+<code>
+<blockquote>
+ <i>bash /tmp/1.sh &gt; /tmp/output.txt</i>
+</blockquote>
+</code>
 
 <p>
 API 1: <input id="host1" placeholder="http://api.example.com" style="width:400px"></input>
