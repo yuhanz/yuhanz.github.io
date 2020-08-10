@@ -204,3 +204,6 @@ const stages = {
     "站立平台": [ ... ],
     ...
 ```
+
+- [游戏演示](http://yuhanz.github.io/platform-game-demo/game.html)
+- [游戏源程序](https://github.com/yuhanz/platform-game-js)
