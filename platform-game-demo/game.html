@@ -1,0 +1,122 @@
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.2.4/pixi.js"></script>
+<script src="./src/collision.js"></script>
+<script src="./src/input.js"></script>
+<script src="./src/stage.js"></script>
+<script src="./src/state.js"></script>
+<script src="./src/animal.js"></script>
+<script src="./src/event-handling.js"></script>
+<script src="./data.js"></script>
+
+<body>
+  <script type="text/javascript">
+
+  let drawDebugEnabled = false;
+
+  function aiControl(animal, tickDelta, environment) {
+    const screenRect = getScreenRect(environment);
+    const inScreen = hitRectangle(animal, screenRect);
+    if(animal.active) {
+      if(!animal.death) {
+        animal.death = !animal.immortal && !inScreen;
+      }
+    } else {
+      animal.active = inScreen;
+    }
+    updateStateByTick(animal, tickDelta, environment);
+  }
+
+  </script>
+  <script type="text/javascript">
+    let type= PIXI.utils.isWebGLSupported() ? "WebGL": "canvas";
+    PIXI.utils.sayHello(type)
+
+    const app = new PIXI.Application(screen.size);
+    app.gameScreen = screen;
+    app.animalTemplates = animalTemplates;
+    app.stage.sortableChildren = true;
+    document.body.appendChild(view = app.view);
+
+    const userInput = new UserInput(document.body);
+
+    Object.values(IMAGE_URLS).reduce((loader, url) => loader.add(url), PIXI.loader);
+    PIXI.loader.load(setup);
+
+    function setup() {
+      person = createAnimalFromOptions(app.animalTemplates.person);
+
+      const environment = loadStage('stage1');
+      setUpNewEnvironment(environment, {player: person, stage: app.stage, screen: app.gameScreen});
+
+      app.ticker.add(gameLoop);
+      let elapsedTime = 0;
+
+      person.children.forEach(c => c.visible = false );
+      person.currentState.remainingTicks = 0
+
+      function getScreenPan(gameScreenSize, mapWidth, panStartX, personX, personOnScreenX) {
+        const maxX = mapWidth - gameScreenSize.width;
+        const pan = Math.max(personOnScreenX - panStartX, 0);
+        return personX - panStartX > maxX ? 0 : pan;
+      }
+
+      function gameLoop(delta, b) {
+        try {
+        delta = Math.round(delta);
+        elapsedTime += delta;
+
+        const personOnScreenX = app.stage.toGlobal(person).x;
+        const personX = person.x;
+        app.stage.position.x -= getScreenPan(app.gameScreen.size, environment.mapWidth, app.gameScreen.panStartX, personX, personOnScreenX);
+
+        const outOfStageOnX = reachOutOfRectangleOnX(person, getStageRect(environment) );
+        const outOfStageOnY = reachOutOfRectangleOnY(person, getStageRect(environment) );
+        if(outOfStageOnX || outOfStageOnY) {
+          onOutOfStage(outOfStageOnX, outOfStageOnY, environment);
+        }
+
+        if(environment.player) {
+          updateStateByTick(environment.player, delta, environment);
+        }
+        if(environment.player) {
+          updateStateByTick(environment.player.weapon, delta, environment);
+        }
+
+        environment.others.forEach(a => aiControl(a, delta, environment));
+        environment.events = [];
+
+        const desiredStates = userInput.getStatesFromUserInput();
+        setState(desiredStates, person);
+
+        userInput.userControl(person, environment);
+
+        const screenRect = getScreenRect(environment);
+        collideAllBlocks(environment.others.filter(a => !a.active), screenRect)
+          .forEach(a => a.active = true);
+
+        environment.animals.forEach(a => {
+          updateMove(a, environment);
+          updateSprites(a);
+          updateWeaponDirection(a);
+        });
+
+        const hitBoxEvents = getHitBoxEvents(environment.animals);
+        const hurtEvents = getHurtEvents(hitBoxEvents, environment);
+      } catch(e) {
+        console.error(e);
+        throw e;
+      }
+      }
+
+    }
+  </script>
+  <br>
+  <ul>How to play:
+    <li>To move: keyboard - asdfw</li>
+    <li>To fire: keyboard - j</li>
+    <li>To jump: keyboard - space bar</li>
+  </ul>
+  <input type="checkbox" onchange="drawDebugEnabled = !drawDebugEnabled; document.body.focus();">Enable debug</input>
+
+</body>
+</html>
