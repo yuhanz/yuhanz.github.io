@@ -53,7 +53,7 @@ function format() {
   hashCode = sha256(input)
   ext={"persistedQuery":{"version":1,"sha256Hash":hashCode}}
 
-  output = `curl -XGET 'http://site_name_here.com/graphql/?query=${encodeURI(input)}&extensions=${encodeURI(ext)}${variables? '&variables='+ encodeURI(variables): ''}'`
+  output = `curl -XGET 'http://site_name_here.com/graphql/?query=${encodeURI(input)}&extensions=${encodeURI(JSON.stringify(ext))}${variables? '&variables='+ encodeURI(variables): ''}'`
 
   document.getElementById('output').innerText = output;
 }
