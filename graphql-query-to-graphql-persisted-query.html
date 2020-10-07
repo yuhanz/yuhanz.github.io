@@ -39,6 +39,9 @@ GraphQL Query:<br>
 Variables:<br>
 <textarea id="variables" style="width:600px;height:60px;" onkeyup="format();"></textarea>
 <br>
+GraphQL Endpoint:<br>
+<input id="endPoint" onkeyup="format();" value="http://your_site_name_here.com/graphql/"></input>
+<br>
 <button onclick="format();">format</button>
 
 <pre id="output">
@@ -52,8 +55,9 @@ function format() {
   var variables = document.getElementById('variables').value;
   hashCode = sha256(input)
   ext={"persistedQuery":{"version":1,"sha256Hash":hashCode}}
+  endPoint = document.getElementById('endPoint').value;
 
-  output = `curl -XGET 'http://site_name_here.com/graphql/?query=${encodeURI(input)}&extensions=${encodeURI(JSON.stringify(ext))}${variables? '&variables='+ encodeURI(variables): ''}'`
+  output = `curl -XGET '${endPoint}?query=${encodeURI(input)}&extensions=${encodeURI(JSON.stringify(ext))}${variables? '&variables='+ encodeURI(variables): ''}'`
 
   document.getElementById('output').innerText = output;
 }
