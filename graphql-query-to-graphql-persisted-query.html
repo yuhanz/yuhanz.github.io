@@ -57,7 +57,7 @@ function format() {
   ext={"persistedQuery":{"version":1,"sha256Hash":hashCode}}
   endPoint = document.getElementById('endPoint').value;
 
-  output = `curl -XGET '${endPoint}?query=${encodeURI(input)}&extensions=${encodeURI(JSON.stringify(ext))}${variables? '&variables='+ encodeURI(variables): ''}'`
+  output = `curl -XGET '${endPoint}?extensions=${encodeURI(JSON.stringify(ext))}&query=${encodeURI(input)}${variables? '&variables='+ encodeURI(variables): ''}'`
 
   document.getElementById('output').innerText = output;
 }
