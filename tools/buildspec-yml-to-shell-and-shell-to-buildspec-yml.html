@@ -34,9 +34,9 @@
 <h3>Convert between shell script and buildspec.yml</h3>
 
 <p>
-AWS CodeBuild executes shell script in buildspec.yaml, which is error-prone to deploy and run at remote.
+AWS CodeBuild executes shell script in buildspec.yaml, which is error-prone, and having a long feedback loop to deploy and run at the remote. .
 <p>
-This tool helps converting shell script in buildspec.yml to execute locally. After edited, convert this shell script to buildspec.yml reliably.
+This tool helps converting shell script in buildspec.yml so that we can test the script locally. After edited, the tool can convert shell script to buildspec.yml reliably, especially when lots of quotes are involved in the shell script.
 <br>
 
 <table>
