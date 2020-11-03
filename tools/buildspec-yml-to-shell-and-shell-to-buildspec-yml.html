@@ -62,7 +62,7 @@ function toShell() {
   if(typeof obj == 'object' && !Array.isArray(obj)) {
     obj = Object.values(obj)[0]
   }
-  document.getElementById('shellText').innerText = obj.join("\n");
+  document.getElementById('shellText').value = obj.join("\n");
 }
 
 function toYaml() {
