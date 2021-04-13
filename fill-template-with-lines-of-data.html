@@ -1,0 +1,85 @@
+<html>
+<head>
+    <meta name="keywords" content="Online tool. Code generator"/>
+    <meta name="description" content="Given lines of data and a template, replace the variable in the template with each data line"/>
+
+    <title>Shell Command Generator</title>
+</head>
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53265003-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- yuhanz.github.io - Maven conflict leaderboard -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2246393274964409"
+     data-ad-slot="9855716535"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<h3>Shell Command Generator</h3>
+
+<p>
+Given lines of data, and a template, iterate through each line and generate output using the template and perform variable replacement.
+The default variable to replace is $1. Imitate what xargs does without execution
+<p>
+<i>Why can't I do this in shell?</i>
+- you could do this, but the argument replacement in shell script is tricky, especially when quotes are involved.
+Escaping the quotes while making argument replacement to happen is extremely difficult. This tools is designed do the replacement
+
+<p>
+<table>
+<tr><th>Data</th><th>Template</th>
+<tr><td><textarea id="input" style="width:600px;height:150px;" onkeyup="format();" placeholder="each
+line
+is
+a
+record
+here"></textarea></td>
+<td><textarea id="template" style="width:600px;height:150px;" onkeyup="format();" placeholder="echo $1"></textarea></td></tr>
+</table>
+<br>
+Varaible:
+<input id="variable" value="$1"></input>
+<br>
+
+<button onclick="format();">format</button>
+
+<pre id="output">
+</pre>
+
+
+<script>
+
+function format() {
+  var input = document.getElementById('input').value;
+  lines = input.split("\n")
+  var template = document.getElementById('template').value;
+  var variable = document.getElementById('variable').value;
+
+  generated = lines.map(l =>
+    template.replaceAll(variable, l)
+  )
+
+  output = generated.join("\n")
+
+
+  document.getElementById('output').innerText = output;
+}
+
+</script>
+
+</body>
+</html>
