@@ -1,0 +1,87 @@
+<html>
+<head>
+    <meta name="keywords" content="Online tool, aggregation, sorted list, csv" />
+    <meta name="description" content="Aggregate sorted list of comma delimited records"/>
+
+    <title>Aggregate value by name from a .csv file</title>
+</head>
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53265003-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<div>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- yuhanz.github.io - Maven conflict leaderboard -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-2246393274964409"
+     data-ad-slot="9855716535"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+
+<h3>Aggregate sorted list of comma delimited records</h3>
+
+<p>
+Given a list records in comma delimited format, each line of which has two fields - first field being the key, second field being the value.
+
+<p>
+<textarea id="input" style="width:600px;height:150px;" onkeyup="format();" placeholder="apple,1
+apple,30
+orange,100
+banana,5
+orange,85"></textarea>
+<br>
+
+<button onclick="format();">format</button>
+
+<pre id="output">
+</pre>
+
+
+<script>
+
+function format() {
+  var input = document.getElementById('input').value;
+  lines = input.split("\n")
+  lines = lines.sort().filter(l => l)
+
+  var result = {}
+  var currentKey = null
+  var sum = 0
+  generated = lines.forEach(l => {
+    [k,v] = l.split(',')
+    if(currentKey != k) {
+      if(currentKey != null) {
+        result[currentKey] = sum;
+      }
+      currentKey = k
+      sum = 0
+    }
+    sum += parseInt(v)
+  })
+  if(currentKey != null) {
+    result[currentKey] = sum;
+  }
+
+  output = ''
+  for(var k in result) {
+    output += k + ',' + result[k] + "\n"
+  }
+
+  document.getElementById('output').innerText = output;
+}
+
+</script>
+
+</body>
+</html>
