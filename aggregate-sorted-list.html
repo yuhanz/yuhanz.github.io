@@ -55,14 +55,14 @@ function format() {
   lines = input.split("\n")
   lines = lines.sort().filter(l => l)
 
-  var result = {}
+  var result = []
   var currentKey = null
   var sum = 0
   generated = lines.forEach(l => {
     [k,v] = l.split(',')
     if(currentKey != k) {
       if(currentKey != null) {
-        result[currentKey] = sum;
+        result.push([currentKey, sum]);
       }
       currentKey = k
       sum = 0
@@ -70,13 +70,15 @@ function format() {
     sum += parseInt(v)
   })
   if(currentKey != null) {
-    result[currentKey] = sum;
+    result.push([currentKey, sum]);
   }
 
+  result.sort((b,a) => a[1] - b[1])
+
   output = ''
-  for(var k in result) {
-    output += k + ',' + result[k] + "\n"
-  }
+  result.forEach(([k,v]) => {
+    output += k + ',' + v + "\n"
+  })
 
   document.getElementById('output').innerText = output;
 }
