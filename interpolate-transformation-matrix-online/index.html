@@ -46,8 +46,8 @@ Result Matrices: <textarea id="resultMatrices"></textarea>
   }
 
   function calculate() {
-    var startM = getMatrixFromTextarea(startMatrix);
-    var endM = getMatrixFromTextarea(endMatrix);
+    var startM = getMatrixFromTextarea('startMatrix');
+    var endM = getMatrixFromTextarea('endMatrix');
     var steps = parseInt(document.getElementById('steps').value);
     var results = interpolateTwoMatrices(startM, endM, steps);
 
