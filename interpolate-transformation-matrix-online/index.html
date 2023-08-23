@@ -40,7 +40,9 @@ Result Matrices: <textarea id="resultMatrices"></textarea>
       var ratio = i * (1.0/(steps+1))
       var q = new THREE.Quaternion();
       q.slerpQuaternions(q1, q2, ratio);
-      results.push(q)
+      var matrix = new THREE.Matrix4();
+      matrix.makeRotationFromQuaternion(q);
+      results.push(matrix);
     }
     return results;
   }
@@ -52,7 +54,7 @@ Result Matrices: <textarea id="resultMatrices"></textarea>
     var results = interpolateTwoMatrices(startM, endM, steps);
 
     var resultTextArea = document.getElementById('resultMatrices');
-    resultTextArea.value = JSON.stringify(results);
+    resultTextArea.value = JSON.stringify(results.map(r => r.toArray()));
   }
 
 </script>
