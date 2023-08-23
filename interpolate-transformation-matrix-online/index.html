@@ -1,5 +1,5 @@
 <!-- three.js library -->
-<script src='./three.min.js'></script>
+<script src='../camera-pose-estimator-tool/three.min.js'></script>
 
 <div id="introduction">
 <h1>Interpolate between two 3D transformation matrices</h1>
@@ -14,9 +14,9 @@ The matrix must only have rotation and translation. (No scaling or skewing)
 
 Start Matrix: <textarea id="startMatrix" placeholder="[11, 12, 13, 14,\n21, 22, 23, 24,\n31, 32, 33, 34,\n41, 42, 43, 44]"></textarea>
 <br>
-End Matrix: <textarea id="endMatrix"/></textarea>
+End Matrix: <textarea id="endMatrix" onchange="calculate()"/></textarea>
 <br>
-Steps: <input id="steps"/>5</input>
+Steps: <input id="steps" value="5" onchange="calculate()"/>
 <p>
 
 Result Matrices: <textarea id="resultMatrices"></textarea>
@@ -43,6 +43,16 @@ Result Matrices: <textarea id="resultMatrices"></textarea>
       results.push(q)
     }
     return results;
+  }
+
+  function calculate() {
+    var startM = getMatrixFromTextarea(startMatrix);
+    var endM = getMatrixFromTextarea(endMatrix);
+    var steps = parseInt(document.getElementById('steps').value);
+    var results = interpolateTwoMatrices(startM, endM, steps);
+
+    var resultTextArea = document.getElementById('resultMatrices');
+    resultTextArea.value = JSON.stringify(results);
   }
 
 </script>
