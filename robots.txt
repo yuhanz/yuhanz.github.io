@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: https://yuhanz.github.io/626/editorial-sitemap.xml
